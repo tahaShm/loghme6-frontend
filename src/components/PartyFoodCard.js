@@ -19,7 +19,7 @@ class PartyFoodCard extends Component {
                 <div class="card myPartyCard">
                     <div class="row mt-2 justify-content-center myPartyCardInfoRow">
                         <div class="col-6 mr-2">
-                            <img class = "menuFoodImage w-100" src = {this.state.partyFood.food.image} alt="food-pic"/>
+                            <img class = "menuFoodImage w-100" src = {this.state.partyFood.food.imageUrl} alt="food-pic"/>
                         </div>
                         <div class="col-5 ml-1 padding-r-0">
                             <div class = "foodName">

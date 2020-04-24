@@ -334,7 +334,7 @@ class Home extends Component {
                         </div>
                         <div class = "foodModalBody row">
                             <div class = "col-5">
-                                <img className = "modalFoodImage" src = {this.state.partyFoods[this.state.curIdx].food.image} alt="food-pic"/>
+                                <img className = "modalFoodImage" src = {this.state.partyFoods[this.state.curIdx].food.imageUrl} alt="food-pic"/>
                             </div>
                             <div class = "col-7">
                                 <div className = "modalFoodName row height-30">
