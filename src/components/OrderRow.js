@@ -15,7 +15,7 @@ class OrderRow extends Component {
         this.setState({userAccountField: this.props.userAccountField ? this.props.userAccountField : false})
     }
     renderStatusButton() {
-        if (this.props.status === "finding delivery") {
+        if (this.props.status === "searching") {
             return (
                 <button type="button" className="btn btn-sm mySearching" onClick = {this.props.onButtonClick}>در جستوجوی پیک</button>
             )

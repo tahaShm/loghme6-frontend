@@ -24,7 +24,7 @@ class FoodCard extends Component {
         return (
             <div className = "col-4 mb-4">
                 <div className="card p-2 menuFoodCard">
-                    <img className = "menuFoodImage" src = {this.state.food.image} alt="food-pic"/>
+                    <img className = "menuFoodImage" src = {this.state.food.imageUrl} alt="food-pic"/>
                     <div className = "row justify-content-center mt-2 mb-n2">
                         <div className = "foodName">
                             <p className = "foodNameLabel"><strong>{this.state.food.name}</strong></p>
