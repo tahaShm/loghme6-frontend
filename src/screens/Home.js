@@ -54,7 +54,8 @@ class Home extends Component {
             foodCountInOrder: 0,
             time: {},
             seconds: 600,
-            searched: false
+            searched: false,
+            showLevel: 1
         }
     }
 
@@ -72,11 +73,29 @@ class Home extends Component {
     }
 
     fetchRestaurants = () => {
-        Axios.get('http://localhost:8080/restaurant')
+        Axios.get('http://localhost:8080/restaurant', {params: {
+            showLevel: this.state.showLevel
+        }})
         .then((response) => {
+            console.log(response)
             this.setState({
                 restaurants: response.data,
                 restaurantLoading: false
+            })
+        })
+        .catch((error) => {
+            console.log(error);
+            this.props.history.push('/home');
+        });
+    }
+    showMore = () => {
+        Axios.get('http://localhost:8080/restaurant', {params: {
+            showLevel: this.state.showLevel + 1
+        }})
+        .then((response) => {
+            this.setState({
+                restaurants: response.data,
+                showLevel: this.state.showLevel + 1
             })
         })
         .catch((error) => {
@@ -347,6 +366,9 @@ class Home extends Component {
 
                 <div class="container">
                     {this.renderRestaurantCards()}
+                </div>
+                <div class="container showMoreButtonDiv">
+                    <button type="button" className="showMoreButton" onClick = {this.showMore}>نمایش بیشتر</button>
                 </div>
                 <Footer />
                 {this.state.partyFoods.length > 0 && 
