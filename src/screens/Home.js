@@ -34,6 +34,7 @@ class Home extends Component {
         this.enableMessage = this.enableMessage.bind(this)
         this.startTimer = this.startTimer.bind(this);
         this.countDown = this.countDown.bind(this);
+        this.fetchSearchedRestaurants = this.fetchSearchedRestaurants.bind(this)
 
         // this.timer = setTimeout(this.enableMessage, 1000);
         this.timer = 0
@@ -52,7 +53,8 @@ class Home extends Component {
             currentOrder: [],
             foodCountInOrder: 0,
             time: {},
-            seconds: 600
+            seconds: 600,
+            searched: false
         }
     }
 
@@ -132,6 +134,9 @@ class Home extends Component {
             return (
                 <Slider children = {content}/>
             )
+        }
+        else {
+            return <h2>hey</h2>
         }
     }
     redirectRestaurant = (index) => {
@@ -259,6 +264,9 @@ class Home extends Component {
     
         let divisor_for_seconds = divisor_for_minutes % 60;
         let seconds = Math.ceil(divisor_for_seconds);
+
+        if (seconds < 10)
+            seconds = "0" + (seconds);
     
         let obj = {
             "h": hours,
@@ -285,6 +293,25 @@ class Home extends Component {
         }
     }
 
+    fetchSearchedRestaurants = (restaurantName, foodName) => {
+        console.log("r: ", restaurantName, " f: ", foodName)
+        if (restaurantName === "" && foodName === "")
+            return
+        Axios.get('http://localhost:8080/search/', {params: {
+            restaurantName: restaurantName,
+            foodName: foodName
+        }})
+        .then((response) => {
+            this.setState({
+                restaurants: response.data,
+                searched: true
+            })
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+
     render() { 
         // if (this.state.restaurantLoading === true || this.state.partyLoading === true || this.state.displayMessage === false) 
         //     return (
@@ -299,7 +326,7 @@ class Home extends Component {
                 <ToastContainer enableMultiContainer containerId={'notEnoughCredit'} type = {toast.TYPE.ERROR} position={toast.POSITION.TOP_CENTER} />
                 <Navbar reservedFoods = {this.state.foodCountInOrder} showCart = {this.showCart} userAccountField = {true}/>
                 <CartModal currentOrder = {this.state.currentOrder} show = {this.state.showCartModal} hideModal = {this.hideCart} finalize = {this.finalizeOrder} increaseButton = {this.increaseFood} decreaseButton = {this.decreaseFood}/>
-                <HomeHeader />
+                <HomeHeader searchRestaurants = {this.fetchSearchedRestaurants} />
                 <div>
                     <p class="myHomeTitle">جشن غذا!</p>
                     <div class="myPartySeparator"></div>

@@ -12,6 +12,9 @@ class RestaurantCard extends Component {
     componentWillMount() {
         this.setState({info : this.props.info})
     }
+    componentWillReceiveProps(nextProps) {
+        this.setState({info : this.props.info})
+    }
     render() {
         return (
             <div class="col-3">
