@@ -63,6 +63,10 @@ class Home extends Component {
         this.setState({displayMessage: true});
     }
 
+    componentWillMount () {
+        this.fetchPartyTime()
+    }
+
     componentDidMount () {
         this.fetchRestaurants()
         this.fetchPartyFoods()
@@ -72,6 +76,17 @@ class Home extends Component {
         this.startTimer();
     }
 
+    fetchPartyTime = () => {
+        Axios.get('http://localhost:8080/partyFood/time')
+        .then((response) => {
+            this.setState({
+                seconds: response.data
+            })
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
     fetchRestaurants = () => {
         Axios.get('http://localhost:8080/restaurant', {params: {
             showLevel: this.state.showLevel
@@ -215,7 +230,7 @@ class Home extends Component {
         }})
         .then((response) => {
             this.setState({currentOrder: response.data})
-            this.setState({foodCountInOrder: this.state.currentOrder.length});
+            this.setState({foodCountInOrder: calcFoodCount(response.data)});
         })
         .catch((error) => {
             console.log(error);
